@@ -17,5 +17,46 @@
 }
 
 function amalfitano_form_view() {
-  return 'see?';
+  return drupal_get_form('amalfitano_simple_form');
+
+}
+
+function amalfitano_simple_form($form, &$form_state) {
+  // First number field
+  $form['number1'] = array(
+    '#title' => t('Enter a number!'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#rules' => array(
+      'numeric',
+    ),
+  );
+
+  // Second number field
+  $form['number2'] = array(
+    '#title' => t('Enter another number!'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#rules' => array(
+      'numeric',
+    ),
+  );
+
+  // Provide a submit button.
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Add them!',
+  );
+
+  return $form;
+}
+
+function amalfitano_simple_form_validate($form, &$form_state) {
+  if (!is_numeric($form_state['values']['number1'])) {
+    form_set_error('number1', t('enter a number please'));
+  }
+
+  if (!is_numeric($form_state['values']['number2'])) {
+    form_set_error('number2', t('come on dude, thats not a number'));
+  }
 }
