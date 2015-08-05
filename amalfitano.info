@@ -1,0 +1,3 @@
+name = Amalfitano
+description = This is a module that uses a page callback to render a form using the Form API
+core = 7.x
