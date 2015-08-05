@@ -5,9 +5,12 @@
  * A module that uses a page callback to render a form with 2 inputs
  */
 
+ // Create  menu link
  function amalfitano_menu() {
   $items['form'] = array(
+    // This will be the user-visible title
     'title' => 'Click me!',
+    //This is the function that will be called when the page is rendered
     'page callback' => 'amalfitano_form_view',
     'access callback' => TRUE,
     'menu_name' => 'main-menu',
@@ -16,20 +19,20 @@
   return $items;
 }
 
+// Our callback function
 function amalfitano_form_view() {
+  // Calls the drupal form API to render our form
   return drupal_get_form('amalfitano_simple_form');
-
 }
 
+// Custom form builder function
 function amalfitano_simple_form($form, &$form_state) {
+
   // First number field
   $form['number1'] = array(
     '#title' => t('Enter a number!'),
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#rules' => array(
-      'numeric',
-    ),
   );
 
   // Second number field
@@ -37,12 +40,9 @@ function amalfitano_simple_form($form, &$form_state) {
     '#title' => t('Enter another number!'),
     '#type' => 'textfield',
     '#required' => TRUE,
-    '#rules' => array(
-      'numeric',
-    ),
   );
 
-  // Provide a submit button.
+  // Create a submit button.
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Add them!',
@@ -52,6 +52,7 @@ function amalfitano_simple_form($form, &$form_state) {
 }
 
 function amalfitano_simple_form_validate($form, &$form_state) {
+  // This will check that the user input stored in $form_state is a numeric value for both fields
   if (!is_numeric($form_state['values']['number1'])) {
     form_set_error('number1', t('enter a number please'));
   }
@@ -59,4 +60,13 @@ function amalfitano_simple_form_validate($form, &$form_state) {
   if (!is_numeric($form_state['values']['number2'])) {
     form_set_error('number2', t('come on dude, thats not a number'));
   }
+}
+
+function amalfitano_simple_form_submit($form, &$form_state) {
+  // Retrieve the values stored in the $form_state array, and add them
+  $num1 = $form_state['values']['number1'];
+  $num2 = $form_state['values']['number2'];
+  $sum = $num1 + $num2;
+  // Display a message to our users.
+  drupal_set_message(t('The sum is: ' . $sum));
 }
