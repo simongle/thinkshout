@@ -1,1 +1,21 @@
 <?php
+
+/**
+ * @file
+ * A module that uses a page callback to render a form with 2 inputs
+ */
+
+ function amalfitano_menu() {
+  $items['form'] = array(
+    'title' => 'Click me!',
+    'page callback' => 'amalfitano_form_view',
+    'access callback' => TRUE,
+    'menu_name' => 'main-menu',
+    'type' => MENU_NORMAL_ITEM
+  );
+  return $items;
+}
+
+function amalfitano_form_view() {
+  return 'see?';
+}
